@@ -23,6 +23,9 @@ def process_bfe_data(data_dir):
 
     df = pd.DataFrame(cleaned_data_file_lines, columns=column_labels)
 
+    droplist = [i for i in df.columns if i.endswith('02')]  #gets rid of BCD5 model forecast errors
+    df.drop(droplist, axis=1, inplace=True)
+
 
     print("#### Saving processed data to file ####")
     df.to_csv(data_dir+'forecast_error/bfe_processed.csv', index = False)
